@@ -4,9 +4,7 @@ const botSection = document.getElementById("botSection");
 const pageDownButton = document.getElementById("scrollDownButton");
 const inputFields = document.getElementsByClassName("form-input");
 const submitButton = document.getElementById("form-submit");
-const prevButton = document.getElementById("prevButton");
-const nextButton = document.getElementById("nextButton");
-
+const scrollList = document.getElementById("scrollList");
 
 pageDownButton.addEventListener("click",pageDown);
 pageDownButton.addEventListener("keydown", function(event){
@@ -18,29 +16,7 @@ function pageDown(){
   document.getElementById('midSection').scrollIntoView();
 }
 
-let storyIndex = 1;
 
-showStory(storyIndex);
-
-function plusStory(n) {
-  showStory(storyIndex += n);
-}
-function showStory(n) {
-  let i;
-  let story = document.getElementsByClassName("story");
-  if (n > story.length) {
-    storyIndex = 1;
-    }
-
-  if (n < 1) {
-    storyIndex = story.length;
-    }
-  for (i = 0; i < story.length; i++) {
-    story[i].style.display = "none";
-  
-  story[storyIndex-1].style.display = "block";
-  }
-}
 
 // prevButton.addEventListener("keydown", function(event){
 //   if(event.keyCode === 13){
@@ -68,38 +44,67 @@ streamVersion.then((data) => document.getElementById("version").innerHTML ="Vers
 
 
 
-// const fetchProducts = 
-//   fetch('https://cws.auckland.ac.nz/gas/api/AllItems',
-//       {
-//           headers : {
-//               "Accept" : "application/json",
-//           },
-//       });
+const fetchProducts = 
+  fetch('https://cws.auckland.ac.nz/gas/api/AllItems',
+      {
+          headers : {
+              "Accept" : "application/json",
+          },
+      });
 
-// const streamProducts = 
-// fetchProducts.then((response) => response.json())
-// .then((data) => list(data,data.length));
+const streamProducts = 
+fetchProducts.then((response) => response.json())
+.then((data) => list(data,data.length));
 
-// function list(a,b){
-//   // let i;
-//   // for( i = 0;i<b;i++){
-//   //     console.log(a[i].name);
-//   // }
-//   const wa = getElementById("productImage");
-//   // wa.source = 
-// }
+function list(a,b){
+  let i;
+  for( i = 0;i<b;i++){
+      console.log(a[i].name);
+      var product = document.createElement("div");
+      var picdiv = document.createElement("div");
+      var pic = document.createElement("img");
+      var textdiv = document.createElement("div");
+      var name = document.createElement("h1");
+      var desc = document.createElement("div");
 
-const fetchimage = fetch('https://cws.auckland.ac.nz/gas/api/ItemPhoto/5431446829');
-const baba = fetchimage.then((response) => response.blob())
-.then(imageblob => {
-  const imageObjectURL = URL.createObjectURL(imageblob);
-  document.getElementById("productImage").setAttribute("src", imageObjectURL);
-});
 
-var p = document.getElementById("aaaaa");
-var node = document.createElement("div");
-  var link = document.createElement("a");
-  link.innerText = "Link Text"
-  link.setAttribute('href', 'http://www.google.it');
- node.appendChild(link);
-  p.appendChild(node);
+
+      let idname = "image"+i;
+      pic.setAttribute("id",idname)
+      name.textContent = a[i].name
+      desc.textContent = a[i].description
+
+      // textdiv.style.cssText = "position: absolute;top: 0;bottom: auto;left:auto;right: 0;width: 50vw;height: 25vh;font-weight: bold;text-align: center;font-size: 1.2rem;display: flex;flex-direction: column;background-color: #c9b2aa;padding-right: 5vw;"
+      // name.style.cssText = "position: absolute;margin-top: 15vh;font-size: 2rem;text-align: left;padding-left: 5vw;padding-right: 5vw;animation-name: slide_title;animation-duration: 0.75s;animation-iteration-count: 1;"
+      // desc.style.cssText = "position: absolute;font-size: 1.2rem;text-align: left;padding-left: 5vw;margin-top: 30vh;padding-right: 5vw;"
+      pic.style.cssText = "width: 20vw;height: 25vh;margin: auto;"
+      picdiv.style.cssText = "width: 20vw;"
+      product.style.cssText = "width: 86vw;height: 25vh;"
+
+      textdiv.appendChild(name);
+      textdiv.appendChild(desc);
+      picdiv.appendChild(pic);
+      product.appendChild(picdiv);
+      product.appendChild(textdiv);
+      scrollList.appendChild(product);
+
+      var fetchimage = fetch('https://cws.auckland.ac.nz/gas/api/ItemPhoto/'+a[i].id);
+      const baba = fetchimage.then((response) => response.blob())
+      .then(imageblob => {
+        const imageObjectURL = URL.createObjectURL(imageblob);
+        document.getElementById(idname).setAttribute("src", imageObjectURL);
+    });
+  }
+}
+
+
+
+
+
+
+
+  // var link = document.createElement("a");
+  // link.innerText = "Link Text"
+  // link.setAttribute('href', 'http://www.google.it');
+  // node.appendChild(link);
+  // p.appendChild(node);

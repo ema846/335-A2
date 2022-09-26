@@ -206,16 +206,19 @@ body{
     margin-right: auto;
     background-color: #592321;
     position: absolute;
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space: nowrap;
 }
 
 .product{
-    position: absolute;
+    /* position: absolute; */
     width: 86vw;
     height: 25vh;
 }
 
 .product-portfolio{
-    position: absolute;
+    /* position: absolute; */
     width: 20vw;
 }
 
@@ -256,22 +259,17 @@ body{
     animation-iteration-count: 1;
 }
 
-.product-content{
+.product-description{
     position: absolute;
     font-size: 1.2rem;
-    
     text-align: left;
     padding-left: 5vw;
     margin-top: 30vh;
     padding-right: 5vw;
-    animation-name: slide_content;
-    animation-duration: 0.75s;
-    animation-iteration-count: 1;
 }
 
 .story-button{
     position: absolute;
-  
     text-decoration: underline;
     font-size: 1rem;
     transition: 0.5s;
@@ -280,9 +278,6 @@ body{
     padding-right: 6vw;
     text-align: right;
     margin-top: 70vh;
-    animation-name: slide_button;
-    animation-duration: 2s;
-    animation-iteration-count: 1;
 }
 
 .product-button:hover{
